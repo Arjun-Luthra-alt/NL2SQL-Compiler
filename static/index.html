@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NL2SQL Compiler - Chat with Your Data</title>
+    <meta name="description" content="An AI-powered assistant that helps you query databases using natural language">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                            <path d="M2 17l10 5 10-5" />
+                            <path d="M2 12l10 5 10-5" />
+                        </svg>
+                    </div>
+                    <span class="logo-text">NL2SQL</span>
+                    <span class="version-badge">v0.2</span>
+                </div>
+                <button class="new-chat-btn" id="newChatBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                    New Chat
+                </button>
+            </div>
+
+            <div class="sessions-list" id="sessionsList">
+                <!-- Sessions will be loaded here -->
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="schema-btn" id="schemaBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                    </svg>
+                    View Schema
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="main-content">
+            <!-- Chat Header -->
+            <header class="chat-header">
+                <button class="menu-toggle" id="menuToggle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
+                <h1 class="chat-title" id="chatTitle">New Conversation</h1>
+                <div class="header-actions">
+                    <span class="status-indicator" id="statusIndicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Connected</span>
+                    </span>
+                </div>
+            </header>
+
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chatMessages">
+                <!-- Welcome message -->
+                <div class="welcome-container" id="welcomeContainer">
+                    <div class="welcome-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                            <path d="M2 17l10 5 10-5" />
+                            <path d="M2 12l10 5 10-5" />
+                        </svg>
+                    </div>
+                    <h2>Welcome to NL2SQL Compiler</h2>
+                    <p>I can help you query your database using natural language. Just ask me questions about your data!
+                    </p>
+
+                    <div class="feature-badges">
+                        <span class="feature-badge">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            CSV Export
+                        </span>
+                        <span class="feature-badge">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="18" y1="20" x2="18" y2="10" />
+                                <line x1="12" y1="20" x2="12" y2="4" />
+                                <line x1="6" y1="20" x2="6" y2="14" />
+                            </svg>
+                            Charts
+                        </span>
+                        <span class="feature-badge">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                                <polyline points="17 21 17 13 7 13 7 21" />
+                                <polyline points="7 3 7 8 15 8" />
+                            </svg>
+                            Persistent History
+                        </span>
+                    </div>
+
+                    <div class="suggestions" id="suggestions">
+                        <!-- Suggestions will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="chat-input-container">
+                <div class="input-wrapper">
+                    <textarea id="messageInput" placeholder="Ask me anything about your data..." rows="1"
+                        autofocus></textarea>
+                    <button class="send-btn" id="sendBtn" disabled>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13" />
+                            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                        </svg>
+                    </button>
+                </div>
+                <p class="input-hint">Press Enter to send, Shift+Enter for new line</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Schema Modal -->
+    <div class="modal" id="schemaModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Database Schema</h2>
+                <button class="modal-close" id="closeSchemaModal">&times;</button>
+            </div>
+            <div class="modal-body" id="schemaContent">
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Modal -->
+    <div class="modal" id="chartModal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>Data Visualization</h2>
+                <div class="chart-controls">
+                    <select id="chartType">
+                        <option value="bar">Bar Chart</option>
+                        <option value="line">Line Chart</option>
+                        <option value="pie">Pie Chart</option>
+                        <option value="doughnut">Doughnut Chart</option>
+                    </select>
+                </div>
+                <button class="modal-close" id="closeChartModal">&times;</button>
+            </div>
+            <div class="modal-body chart-container">
+                <canvas id="dataChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+# Environment variables (contains API keys)
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Database files
+*.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Swap and temp files
+*.swp
+*.save
+*.save.*
+
+# Nested duplicate directory
+NL2SQL Compiler -Phase2/
