@@ -2,7 +2,7 @@
 Agent Interface (Dependency Inversion Principle)
 
 This abstract interface defines the contract for the AI agent.
-Allows different agent implementations (LangChain, custom, etc.)
+Allows different agent implementations (LangChain, custom, etc.)  
 """
 
 from abc import ABC, abstractmethod
