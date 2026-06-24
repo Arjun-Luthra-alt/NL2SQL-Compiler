@@ -11,7 +11,7 @@ import json
 from ..interfaces.agent_interface import IAgent, AgentResponse
 from ..interfaces.llm_interface import ILLMService, ChatMessage
 from ..interfaces.database_interface import IDatabaseAdapter
-from ..interfaces.memory_interface import IMemoryStore
+from ..interfaces.memory_interface import IMemoryStore  
 
 
 # Response generation prompt
