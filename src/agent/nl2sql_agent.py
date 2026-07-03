@@ -13,7 +13,6 @@ from ..interfaces.llm_interface import ILLMService, ChatMessage
 from ..interfaces.database_interface import IDatabaseAdapter
 from ..interfaces.memory_interface import IMemoryStore  
 
-
 # Response generation prompt
 RESPONSE_PROMPT = """You are a friendly data assistant helping non-technical users understand their data.
 
